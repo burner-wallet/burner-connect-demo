@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import { provider } from './web3';
+import WalletInfo from './WalletInfo';
 
-function App() {
+const App = () => {
+  const [connected, setConnected] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const connect = async () => {
+    setLoading(true);
+    await provider.enable().catch(() => null);
+    setLoading(false);
+    setConnected(provider.connected);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        Burner Connect
       </header>
+      {connected ? (
+        <WalletInfo />
+      ) : (
+        <div>
+          <button onClick={connect} disabled={loading}>Connect to Burner Wallet</button>
+        </div>
+      )}
     </div>
   );
 }
