@@ -25,15 +25,15 @@ const WalletInfo = () => {
       {address && (<div>{address}</div>)}
 
       {assets.length > 0 && (<div>Assets:</div>)}
-      <ul>
+      <div>
         {assets.map(asset => (
-          <li onClick={() => setSelectedAsset(asset)} key={asset.id}>
+          <button onClick={() => setSelectedAsset(asset)} key={asset.id}>
             {asset.name}
-          </li>
+          </button>
         ))}
-      </ul>
+      </div>
 
-      {selectedAsset && selectedAsset.type === 'native' && (
+      {selectedAsset && (
         <AssetForm asset={selectedAsset} address={address}/>
       )}
     </div>
